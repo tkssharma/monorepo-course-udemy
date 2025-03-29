@@ -3,9 +3,13 @@
   "version": "0.1.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\""
   },
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "gitHead": "1f0a3351df4c0c8e8b11ab8e05602d6a4fdacb8d",
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
 }

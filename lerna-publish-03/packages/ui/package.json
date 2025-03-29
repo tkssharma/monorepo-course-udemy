@@ -1,0 +1,15 @@
+{
+  "name": "@monorepo/ui",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "echo \"Error: no test specified\""
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@monorepo/shared": "*",
+    "react": "^19.1.0"
+  }
+}
