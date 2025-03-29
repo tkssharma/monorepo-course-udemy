@@ -4,14 +4,6 @@
   "workspaces": [
     "packages/*"
   ],
-  "scripts": {
-    "start:backend": "node packages/api/index.js",
-    "start:frontend": "cd packages/ui && npm start",
-    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\""
-  },
-  "dependencies": {
-    "concurrently": "^9.1.2"
-  },
   "devDependencies": {
     "lerna": "^8.2.1"
   }
