@@ -1,3 +1,3 @@
 module.exports = {
-  greet: (name) => `Hello, ${name}!`
+  greet: (name) => `Hello, User ${name}!`
 };

@@ -1,0 +1,8 @@
+40 error Error: Command failed with exit code 128: git tag v0.1.0 -m v0.1.0
+40 error fatal: tag 'v0.1.0' already exists
+40 error     at makeError (/Users/tkssharma/tkssharma/tkssharma/monorepo-2025/lerna-apps-04/node_modules/execa/lib/error.js:59:11)
+40 error     at handlePromise (/Users/tkssharma/tkssharma/tkssharma/monorepo-2025/lerna-apps-04/node_modules/execa/index.js:114:26)
+40 error     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+40 error     at async VersionCommand.gitCommitAndTagVersion (/Users/tkssharma/tkssharma/tkssharma/monorepo-2025/lerna-apps-04/node_modules/lerna/dist/index.js:9972:9)
+40 error     at async VersionCommand.commitAndTagUpdates (/Users/tkssharma/tkssharma/tkssharma/monorepo-2025/lerna-apps-04/node_modules/lerna/dist/index.js:9937:18)
+40 error     at async Promise.all (index 0)
