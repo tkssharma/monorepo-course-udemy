@@ -1,0 +1,56 @@
+{
+  "name": "@nx-monorepo/nestjs-app",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "name": "nestjs-app",
+    "targets": {
+      "build": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "webpack-cli build",
+          "args": [
+            "node-env=production"
+          ]
+        },
+        "configurations": {
+          "development": {
+            "args": [
+              "node-env=development"
+            ]
+          }
+        }
+      },
+      "serve": {
+        "executor": "@nx/js:node",
+        "defaultConfiguration": "development",
+        "dependsOn": [
+          "build"
+        ],
+        "options": {
+          "buildTarget": "nestjs-app:build",
+          "runBuildTargetDependencies": false
+        },
+        "configurations": {
+          "development": {
+            "buildTarget": "nestjs-app:build:development"
+          },
+          "production": {
+            "buildTarget": "nestjs-app:build:production"
+          }
+        }
+      },
+      "test": {
+        "options": {
+          "passWithNoTests": true
+        }
+      },
+      "docker-build": {
+        "dependsOn": [
+          "build"
+        ],
+        "command": "docker build -f apps/nestjs-app/Dockerfile . -t nestjs-app"
+      }
+    }
+  }
+}

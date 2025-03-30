@@ -1,0 +1,13 @@
+{
+  "name": "@nx-build-optimization/nextjs",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "name": "nextjs"
+  },
+  "dependencies": {
+    "next": "~15.1.4",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  }
+}
