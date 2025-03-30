@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  build_test_lint:
+    name: Build, Test, and Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js (v20)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm' # Let setup-node handle pnpm caching.
+          registry-url: 'https://registry.npmjs.org/' #important for pnpm install
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build all apps
+        run: pnpm turbo run build --cache-dir=".turbo"
+
+      - name: Run Tests
+        run: pnpm turbo run test --cache-dir=".turbo"
+
+      - name: Run Linter
+        run: pnpm turbo run lint --cache-dir=".turbo"
