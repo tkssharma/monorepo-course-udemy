@@ -1,0 +1,20 @@
+{
+  "name": "@tkssharma/package-4",
+  "version": "2.0.0",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\""
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-github-username/my-lerna-monorepo.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "gitHead": "060af118341e2e6b27a0c4d956117f6951c8e64f"
+}

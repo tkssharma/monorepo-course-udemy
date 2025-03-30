@@ -1,0 +1,19 @@
+{
+  "name": "root",
+  "private": true,
+  "packageManager": "npm@9.0.0",
+  "workspaces": {
+    "packages": ["packages/*"]
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "publish": "turbo run publish --access restricted"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "devDependencies": {
+    "turbo": "^2.4.4"
+  }
+}
