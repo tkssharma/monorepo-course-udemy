@@ -1,0 +1,16 @@
+{
+  "$schema": "node_modules/lerna/schemas/lerna-schema.json",
+  "packages": ["packages/*"],
+  "version": "independent",
+  "command": {
+    "publish": {
+      "registry": "https://gitlab.com/api/v4/projects/69777616/packages/npm/"
+    },
+    "version": {
+      "createRelease": "gitlab",
+      "conventionalCommits": true,
+      "allowBranch": ["master", "develop"],
+      "message": "chore(release): publish [skip ci]"
+    }
+  }
+}
