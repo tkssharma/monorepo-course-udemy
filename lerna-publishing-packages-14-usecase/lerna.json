@@ -4,7 +4,7 @@
   "version": "independent",
   "command": {
     "publish": {
-      "registry": "https://gitlab.com/api/v4/projects/69777616/packages/npm/"
+      "registry": "https://gitlab.com/api/v4/projects/XXXXXXXX/packages/npm/"
     },
     "version": {
       "createRelease": "gitlab",

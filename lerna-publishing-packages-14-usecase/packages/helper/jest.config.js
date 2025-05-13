@@ -6,7 +6,7 @@ module.exports = {
   ...base,
   rootDir: "./build",
   name: "constants",
-  displayName: "@cdc3/constants",
+  displayName: "@tkssharma/constants",
   collectCoverage: true,
   verbose: true,
 };
