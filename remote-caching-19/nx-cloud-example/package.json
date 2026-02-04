@@ -1,0 +1,17 @@
+{
+  "name": "nx-cloud-monorepo",
+  "private": true,
+  "scripts": {
+    "build": "nx run-many -t build",
+    "test": "nx run-many -t test",
+    "lint": "nx run-many -t lint",
+    "affected:build": "nx affected -t build",
+    "affected:test": "nx affected -t test",
+    "graph": "nx graph"
+  },
+  "devDependencies": {
+    "nx": "^19.0.0",
+    "@nx/js": "^19.0.0",
+    "typescript": "^5.4.0"
+  }
+}

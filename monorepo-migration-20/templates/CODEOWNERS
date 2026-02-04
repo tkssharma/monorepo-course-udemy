@@ -1,0 +1,66 @@
+# CODEOWNERS - Define code ownership for monorepo
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default owners for everything
+* @org/platform-team
+
+# ============================================
+# Apps
+# ============================================
+
+# Frontend applications
+/apps/web/               @org/frontend-team
+/apps/mobile/            @org/mobile-team
+/apps/admin/             @org/frontend-team @org/admin-team
+
+# Backend services
+/apps/api/               @org/backend-team
+/apps/auth-service/      @org/backend-team @org/security-team
+/apps/notification-service/ @org/backend-team
+
+# ============================================
+# Packages (shared libraries)
+# ============================================
+
+# UI components
+/packages/ui/            @org/design-system-team
+/packages/icons/         @org/design-system-team
+
+# Shared utilities
+/packages/utils/         @org/platform-team
+/packages/config/        @org/platform-team
+/packages/types/         @org/platform-team
+
+# ============================================
+# Infrastructure & Tooling
+# ============================================
+
+# CI/CD configuration
+/.github/                @org/devops-team
+/.gitlab-ci.yml          @org/devops-team
+
+# Build configuration
+/turbo.json              @org/platform-team
+/nx.json                 @org/platform-team
+/pnpm-workspace.yaml     @org/platform-team
+
+# Docker
+/docker/                 @org/devops-team
+/docker-compose*.yml     @org/devops-team
+
+# ============================================
+# Documentation
+# ============================================
+
+/docs/                   @org/docs-team
+*.md                     @org/docs-team
+README.md                @org/platform-team
+
+# ============================================
+# Security-sensitive files
+# ============================================
+
+# These require security team review
+/packages/auth/          @org/security-team
+**/security*.ts          @org/security-team
+**/*.secret.*            @org/security-team

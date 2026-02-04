@@ -1,0 +1,16 @@
+{
+  "name": "module-federation-monorepo",
+  "private": true,
+  "packageManager": "pnpm@9.0.0",
+  "scripts": {
+    "dev": "pnpm -r --parallel dev",
+    "build": "pnpm -r build",
+    "dev:shell": "pnpm --filter shell dev",
+    "dev:products": "pnpm --filter products dev",
+    "dev:cart": "pnpm --filter cart dev",
+    "build:all": "pnpm -r build"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0"
+  }
+}

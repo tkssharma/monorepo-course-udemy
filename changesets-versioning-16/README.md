@@ -1,11 +1,7 @@
-# Module 16: Changesets - Modern Versioning & Changelog Management
+# Changesets - Modern Versioning & Changelog Management
 
-## 🎬 Video Script
 
 ---
-
-### INTRO (0:00 - 1:00)
-
 Hey everyone, welcome back to the Monorepo Mastery course! I'm TK Sharma, and in this module, we're going to learn about **Changesets** - the modern way to manage versions and changelogs in monorepos.
 
 If you've used Lerna before for versioning, you're going to love Changesets. It's what major projects like **Chakra UI**, **Radix UI**, **pnpm**, and **Turborepo** use for their releases.
@@ -17,11 +13,9 @@ By the end of this video, you'll know how to:
 - Automate releases with GitHub Actions
 - Generate beautiful changelogs automatically
 
-Let's dive in!
-
 ---
 
-### PART 1: Why Changesets? (1:00 - 4:00)
+### PART 1: Why Changesets? 
 
 #### The Problem with Traditional Versioning
 
@@ -53,7 +47,7 @@ The key insight: **Capture intent at PR time, not release time.**
 
 ---
 
-### PART 2: Setting Up Changesets (4:00 - 8:00)
+### PART 2: Setting Up Changesets
 
 #### Step 1: Install Changesets
 

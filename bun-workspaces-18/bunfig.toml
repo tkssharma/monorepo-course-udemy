@@ -1,0 +1,12 @@
+[install]
+# Save exact versions
+exact = true
+
+[install.scopes]
+# Configure private registries if needed
+# "@tkssharma" = { token = "$NPM_TOKEN", url = "https://npm.pkg.github.com" }
+
+[test]
+# Test configuration
+coverage = true
+coverageDir = "coverage"

@@ -11,6 +11,7 @@ export const createButton = (props: ButtonProps): string => {
   return `<button class="btn btn-${variant}">${capitalize(label)}</button>`;
 };
 
+
 export interface CardProps {
   title: string;
   content: string;

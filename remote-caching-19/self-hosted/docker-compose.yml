@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  # Self-hosted Turborepo Remote Cache using ducktors/turborepo-remote-cache
+  turbo-cache:
+    image: ducktors/turborepo-remote-cache:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - STORAGE_PROVIDER=local
+      - STORAGE_PATH=/cache
+      - TURBO_TOKEN=your-secret-token
+      - PORT=3000
+    volumes:
+      - turbo-cache-data:/cache
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Alternative: S3-compatible storage with MinIO
+  minio:
+    image: minio/minio:latest
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      - MINIO_ROOT_USER=minioadmin
+      - MINIO_ROOT_PASSWORD=minioadmin
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio-data:/data
+
+  # Turborepo cache with S3 backend
+  turbo-cache-s3:
+    image: ducktors/turborepo-remote-cache:latest
+    ports:
+      - "3001:3000"
+    environment:
+      - NODE_ENV=production
+      - STORAGE_PROVIDER=s3
+      - S3_ACCESS_KEY=minioadmin
+      - S3_SECRET_KEY=minioadmin
+      - S3_BUCKET=turbo-cache
+      - S3_ENDPOINT=http://minio:9000
+      - TURBO_TOKEN=your-secret-token
+    depends_on:
+      - minio
+
+volumes:
+  turbo-cache-data:
+  minio-data:

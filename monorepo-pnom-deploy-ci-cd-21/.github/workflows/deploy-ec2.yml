@@ -1,0 +1,102 @@
+name: Deploy to AWS EC2
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/api/**'
+      - 'packages/lib/**'
+      - '.github/workflows/deploy-ec2.yml'
+
+env:
+  AWS_REGION: us-east-1
+  EC2_HOST: ${{ secrets.EC2_HOST }}
+  EC2_USER: ubuntu
+  APP_DIR: /home/ubuntu/api
+
+jobs:
+  deploy:
+    name: Deploy to EC2
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build
+        run: pnpm build
+
+      - name: Test
+        run: pnpm test
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      # Option 1: Deploy via SSH
+      - name: Setup SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/ec2_key
+          chmod 600 ~/.ssh/ec2_key
+          ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to EC2 via SSH
+        run: |
+          # Create deployment package
+          tar -czf deploy.tar.gz \
+            apps/api/dist \
+            apps/api/package.json \
+            packages/lib/src \
+            packages/lib/package.json \
+            package.json \
+            pnpm-workspace.yaml \
+            pnpm-lock.yaml
+
+          # Upload to EC2
+          scp -i ~/.ssh/ec2_key deploy.tar.gz ${{ env.EC2_USER }}@${{ env.EC2_HOST }}:/tmp/
+
+          # Deploy on EC2
+          ssh -i ~/.ssh/ec2_key ${{ env.EC2_USER }}@${{ env.EC2_HOST }} << 'EOF'
+            cd ${{ env.APP_DIR }}
+            
+            # Backup current version
+            cp -r . ../api_backup || true
+            
+            # Extract new version
+            tar -xzf /tmp/deploy.tar.gz -C .
+            
+            # Install production dependencies
+            pnpm install --prod
+            
+            # Restart application with PM2
+            pm2 restart api || pm2 start apps/api/dist/index.js --name api
+            
+            # Cleanup
+            rm /tmp/deploy.tar.gz
+          EOF
+
+      # Option 2: Deploy via AWS CodeDeploy (uncomment if using CodeDeploy)
+      # - name: Create CodeDeploy Deployment
+      #   run: |
+      #     aws deploy create-deployment \
+      #       --application-name monorepo-api \
+      #       --deployment-group-name production \
+      #       --github-location repository=${{ github.repository }},commitId=${{ github.sha }}

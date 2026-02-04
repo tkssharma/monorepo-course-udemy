@@ -1,0 +1,79 @@
+name: Deploy to AWS Lambda
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/api/**'
+      - 'packages/lib/**'
+      - '.github/workflows/deploy-lambda.yml'
+
+env:
+  AWS_REGION: us-east-1
+  FUNCTION_NAME: monorepo-api
+
+jobs:
+  deploy:
+    name: Deploy to Lambda
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build
+        run: pnpm build
+
+      - name: Test
+        run: pnpm test
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      # Option 1: Deploy using Serverless Framework
+      - name: Deploy with Serverless Framework
+        run: |
+          npm install -g serverless
+          cd apps/api
+          serverless deploy --stage prod
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      # Option 2: Deploy using AWS SAM (uncomment if using SAM)
+      # - name: Deploy with SAM
+      #   run: |
+      #     pip install aws-sam-cli
+      #     cd apps/api
+      #     sam build
+      #     sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
+
+      # Option 3: Direct Lambda update (for simple updates)
+      # - name: Package Lambda
+      #   run: |
+      #     cd apps/api
+      #     zip -r function.zip dist node_modules package.json
+      #
+      # - name: Deploy to Lambda
+      #   run: |
+      #     aws lambda update-function-code \
+      #       --function-name ${{ env.FUNCTION_NAME }} \
+      #       --zip-file fileb://apps/api/function.zip

@@ -1,0 +1,14 @@
+node_modules
+dist
+build
+.env
+.env.local
+.env.*.local
+*.log
+.DS_Store
+.pnpm-store
+.turbo
+.nx
+.cache
+coverage
+*.pem

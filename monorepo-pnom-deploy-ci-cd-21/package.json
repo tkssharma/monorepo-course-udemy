@@ -1,0 +1,19 @@
+{
+  "name": "monorepo-deploy-ci-cd",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --filter @apps/api dev",
+    "build": "pnpm --filter @apps/api build",
+    "start": "pnpm --filter @apps/api start",
+    "lint": "pnpm -r lint",
+    "test": "pnpm -r test"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  },
+  "packageManager": "pnpm@9.0.0",
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

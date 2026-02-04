@@ -1,0 +1,17 @@
+{
+  "name": "bun-workspaces-monorepo",
+  "private": true,
+  "workspaces": ["packages/*", "apps/*"],
+  "scripts": {
+    "dev": "bun --filter '*' dev",
+    "build": "bun --filter '*' build",
+    "test": "bun test",
+    "dev:api": "bun --filter api dev",
+    "dev:web": "bun --filter web dev",
+    "typecheck": "bun --filter '*' typecheck"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^5.4.0"
+  }
+}
